@@ -491,7 +491,8 @@ func (user *User) startupTryConnect(retryCount int) {
 				user.bridge.Metrics.TrackLoginState(user.SignalID, false)
 				user.clearKeysAndDisconnect()
 				if managementRoom := user.GetManagementRoomID(); managementRoom != "" {
-					_, _ = user.bridge.Bot.SendText(ctx, managementRoom, "You've been logged out of Signal")
+					message := fmt.Sprintf("Signal user ID %s has been logged out.", user.SignalID)
+					_, _ = user.bridge.Bot.SendText(ctx, managementRoom, message)
 				}
 
 			case signalmeow.SignalConnectionEventError:
